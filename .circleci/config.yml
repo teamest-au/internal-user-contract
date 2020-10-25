@@ -8,6 +8,7 @@ jobs:
       - run:
           name: Run Generation
           command: |
+            npm ci
             npm run generate
       - run:
           name: Run Client Build
