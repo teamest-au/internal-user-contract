@@ -1,0 +1,12 @@
+{
+  "name": "InternalUser",
+  "sourceFolder": "./config",
+  "destinationFolder": "./",
+  "clientNpmPackageName": "@teamest/internal-user-client",
+  "serverNpmPackageName": "@teamest/internal-user-server",
+  "services": [
+    {
+      "name": "FindUser"
+    }
+  ]
+}

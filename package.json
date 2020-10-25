@@ -1,0 +1,25 @@
+{
+  "name": "@teamest/internal-user-contract",
+  "version": "0.0.1",
+  "description": "Contract and generator for the internal user service",
+  "main": "index.js",
+  "scripts": {
+    "generate": "npx generate-rpc ./config/InternalUser.specification.json",
+    "build-client": "cd client && npm i && npm run build",
+    "build-server": "cd server && npm i && npm run build",
+    "clean": "rm -rf client && rm -rf server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teamest-au/internal-user-contract.git"
+  },
+  "author": "Daniel Emery <danielremery@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/teamest-au/internal-user-contract/issues"
+  },
+  "homepage": "https://github.com/teamest-au/internal-user-contract#readme",
+  "devDependencies": {
+    "@danielemeryau/dumb-node-rpc": "0.0.7"
+  }
+}

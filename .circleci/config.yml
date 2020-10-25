@@ -1,0 +1,87 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: Run Generation
+          command: |
+            npm run generate
+      - run:
+          name: Run Client Build
+          command: |
+            npm run build-client
+      - run:
+          name: Run Server Build
+          command: |
+            npm run build-server
+      - persist_to_workspace:
+          root: .
+          paths:
+            - client/*
+            - server/*
+
+  publish-beta:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Authenticate with NPM
+          command: |
+            printf "//`node -p \"require('url').parse(process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org').host\"`/:_authToken=${NPM_TOKEN}\nregistry=${NPM_REGISTRY_URL:-https://registry.npmjs.org}\n" > .npmrc
+            npm whoami
+      - run:
+          name: Deploy client to NPM
+          command: |
+            cd client && npm publish --access public --tag beta
+      - run:
+          name: Deploy server to NPM
+          command: |
+            cd server && npm publish --access public --tag beta
+  publish:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Authenticate with NPM
+          command: |
+            printf "//`node -p \"require('url').parse(process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org').host\"`/:_authToken=${NPM_TOKEN}\nregistry=${NPM_REGISTRY_URL:-https://registry.npmjs.org}\n" > .npmrc
+            npm whoami
+      - run:
+          name: Deploy client to NPM
+          command: |
+            cd client && npm publish --access public
+      - run:
+          name: Deploy server to NPM
+          command: |
+            cd server && npm publish --access public
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
+      - publish-beta:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /v([0-9])*.([0-9])*.([0-9])*-.*/
+            branches:
+              ignore: /.*/
+      - publish:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /v([0-9])*.([0-9])*.([0-9])*/
+            branches:
+              ignore: /.*/
