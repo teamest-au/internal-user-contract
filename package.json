@@ -1,6 +1,6 @@
 {
   "name": "@teamest/internal-user-contract",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Contract and generator for the internal user service",
   "main": "index.js",
   "scripts": {
