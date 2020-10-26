@@ -1,5 +1,5 @@
 {
-  "name": "InternalUser",
+  "name": "InternalUserService",
   "sourceFolder": "./config",
   "destinationFolder": ".",
   "clientNpmPackageName": "@teamest/internal-user-client",
