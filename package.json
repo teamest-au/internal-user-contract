@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/teamest-au/internal-user-contract#readme",
   "devDependencies": {
-    "@danielemeryau/dumb-node-rpc": "0.0.13"
+    "@danielemeryau/dumb-node-rpc": "0.0.15"
   },
   "dependencies": {
     "@teamest/models": "^0.9.2"
